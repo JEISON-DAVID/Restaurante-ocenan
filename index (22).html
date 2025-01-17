@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCEÁNICA - Cocina de Mar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1B3242;
+            --accent: #00C2CB;
+            --text: #E4F2F3;
+            --dark: #0A1721;
+            --light: #F5FAFA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            background: rgba(10, 23, 33, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 28px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,194,203,0.3)),
+                        url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/c5/0d/f2/espacios-buffalo-grill.jpg') center/cover;
+            animation: scaleBackground 20s infinite alternate;
+        }
+
+        @keyframes scaleBackground {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .header-content {
+            position: relative;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .header h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: transform 0.3s;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--dark);
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .section {
+            padding: 100px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .menu-item-content {
+            padding: 30px;
+        }
+
+        .menu-item h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .price {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .about {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.1;
+            top: -300px;
+            right: -300px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .contact {
+            position: relative;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .contact-info {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: transform 0.3s;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-10px);
+        }
+
+        .contact-info i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: var(--primary);
+            padding: 40px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header h1 {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#" class="nav-logo">OCEÁNICA</a>
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#menu">Menú</a>
+            <a href="#about">Historia</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+
+    <header class="header" id="inicio">
+        <div class="header-content">
+            <h1>OCEÁNICA</h1>
+            <p>Una experiencia gastronómica única donde el mar se encuentra con la innovación</p>
+            <a href="#menu" class="btn">Explorar Menú</a>
+        </div>
+    </header>
+
+    <section class="section" id="menu">
+        <div class="container">
+            <h2 class="section-title">Nuestros platos</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKDVtNFix8f6_kJr_XYhu95Fle5HCiXlsnUw&s" alt="Ceviche de autor">
+                    <span class="price">$24</span>
+                    <div class="menu-item-content">
+                        <h3>hueva pescado</h3>
+                        <p>Pesca del día curada en cítricos, ají amarillo, camote glaseado y crocantes de maíz</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://media-cdn.tripadvisor.com/media/photo-s/1a/dd/20/00/poderosa-para-empezar.jpg" alt="Pulpo al carbón">
+                    <span class="price">$32</span>
+                    <div class="menu-item-content">
+                        <h3>Mojarra Roja</h3>
+                        <p>Tentáculo de pulpo braseado, puré de papas ahumadas y chimichurri de hierbas</p>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://i.pinimg.com/736x/f4/16/ea/f416ea348f7382d4ecfbc3c97a8c3a1e.jpg" alt="Risotto marino">
+                    <span class="price">$28</span>
+                    <div class="menu-item-content">
+                        <h3>Mojarra Negra</h3>
+                        <p>Arroz carnaroli, mariscos seleccionados, azafrán y espuma de parmesano</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <h2 class="section-title">Nuestra Historia</h2>
+                    <p>OCEÁNICA nace de la pasión por el mar y la cocina de autor. Cada plato es una obra de arte que fusiona técnicas contemporáneas con los sabores más puros del océano. Nuestro compromiso con la sostenibilidad y los productos locales nos permite ofrecer una experiencia gastronómica única y consciente.</p>
+                </div>
+                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/c5/0d/f2/espacios-buffalo-grill.jpg" alt="Restaurante">
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Encuéntranos</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Ubicación</h3>
+                    <p>Malecón del Río 243<br>Zona Gastronómica</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-clock"></i>
+                    <h3>Horario</h3>
+                    <p>Martes a Domingo<br>13:00 - 23:00</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <h3>Reservas</h3>
+                    <p>+1 234 567 890<br>reservas@oceanica.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 OCEÁNICA. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
